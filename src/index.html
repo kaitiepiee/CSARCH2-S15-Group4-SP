@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decimal-128 Floating Point Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    .converter {
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 400px;
+      margin: auto;
+    }
+    .converter input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    .converter button {
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .converter button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="converter">
+    <h2>Decimal-128 Floating Point Converter</h2>
+    <input type="text" id="decimalInput" placeholder="Enter Decimal Number">
+    <button onclick="convert()">Convert</button>
+    <p>Binary Output: <span id="binaryOutput"></span></p>
+    <p>Hexadecimal Equivalent: <span id="hexOutput"></span></p>
+    <p>Special Cases: <span id="specialCases"></span></p>
+  </div>
+
+  <script>
+    function convert() {
+      var decimalInput = document.getElementById('decimalInput').value;
+      var binaryOutput = parseFloat(decimalInput).toString(2);
+      var hexOutput = parseFloat(decimalInput).toString(16);
+      var specialCases = isNaN(decimalInput) ? "NaN" : "";
+      
+      document.getElementById('binaryOutput').innerText = binaryOutput;
+      document.getElementById('hexOutput').innerText = hexOutput;
+      document.getElementById('specialCases').innerText = specialCases;
+    }
+  </script>
+</body>
+</html>
