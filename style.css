@@ -1,60 +1,111 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-  }
-  
-  .converter {
-    padding: 20px;
+    font-family: Arial, sans-serif; /* Set the font family to Arial */
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+.converter {
+    padding: 30px;
     border-radius: 5px;
     max-width: 650px;
     margin: auto;
-  }
-  
-  .converter h2 {
+    text-align: center;
+    flex-grow: 1;
+    width: 100%
+}
+
+.converter h2 {
     margin-bottom: 20px;
-  }
-  
-  .input-container {
+}
+
+.input-container {
+    padding: 20px;
     display: flex;
-    align-items: center; /* Align items vertically in the center */
-  }
-  
-  .input-container input[type="text"],
-  .input-container input[type="number"] {
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.input-container input[type="text"],
+.input-container input[type="number"] {
     width: calc(50% - 5px);
     padding: 8px;
-    margin-bottom: 10px;
+    margin-right: 5px;
     box-sizing: border-box;
-  }
-  
-  .input-container span {
+}
+
+.input-container span {
     margin: 0 10px;
-  }
-  
-  .converter label {
+}
+
+.rounding-container {
+    margin-bottom: 10px;
+}
+
+.rounding-container label {
     display: block;
     margin-bottom: 5px;
-  }
-  
-  .converter select {
-    width: 100%;
+}
+
+.rounding-container select {
+    width: auto;
     padding: 8px;
-    margin-bottom: 10px;
     box-sizing: border-box;
-  }
-  
-  .converter button {
-    width: 100%;
+}
+
+.converter button {
+    width: auto;
     padding: 10px;
-    background-color: #007bff;
-    color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .converter button:hover {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.converter button.convert-button {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.converter button.convert-button:hover {
     background-color: #0056b3;
-  }
-  
+}
+
+.converter button.download-button {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.converter button.download-button:hover {
+    background-color: #0056b3;
+}
+
+.output-container {
+    text-align: left;
+}
+
+.output-line {
+    margin-bottom: 5px;
+}
+
+.output-box {
+    display: block;
+    width: 100%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-radius: 3px;
+}
+
+footer {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #666;
+}

@@ -8,27 +8,35 @@
 </head>
 <body>
   <div class="converter">
-    <h2>Decimal-128 Floating Point Converter</h2>
+    <h2 class="title">Decimal-128 Floating Point Converter</h2>
     <div class="input-container">
       <input type="text" id="decimalInput" placeholder="Enter decimal (i.e., 127.0)">
       <span>x10</span>
       <input type="number" id="exponentInput" placeholder="Enter exponent">
     </div>
 
-    <label for="roundingMethod">Choose rounding method:</label>
-    <select id="roundingMethod">
-      <option value="truncate">Truncate</option>
-      <option value="roundUp">Round Up</option>
-      <option value="roundDown">Round Down</option>
-      <option value="roundToNearest">Round to Nearest (ties to even)</option>
-    </select>
+    <div class="rounding-container">
+      <label for="roundingMethod">Choose rounding method:</label>
+      <select id="roundingMethod">
+        <option value="truncate">Truncate</option>
+        <option value="roundUp">Round Up</option>
+        <option value="roundDown">Round Down</option>
+        <option value="roundToNearest">Round to Nearest (ties to even)</option>
+      </select>
+    </div>
 
-    <button onclick="convert()">Convert</button>
-    <p>Binary Output: <span id="binaryOutput"></span></p>
-    <p>Hexadecimal Equivalent: <span id="hexOutput"></span></p>
-    <p>Special Cases: <span id="specialCases"></span></p>
+    <div class="button-container">
+      <button class="convert-button" onclick="convert()">Convert</button>
+    </div>
+
+    <div class="output-container">
+      <p class="output-line">Binary Output: <span class="output-box" id="binaryOutput"></span></p>
+      <p class="output-line">Hexadecimal Equivalent: <span class="output-box" id="hexOutput"></span></p>
+    </div>
+
+    <button class="download-button" onclick="downloadOutput()">Download Output</button>
   </div>
 
-  <script src="script.js"></script>
+  <footer>CSARCH2 Simulation Project S15 Group 4</footer>
 </body>
 </html>
