@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decimal-128 Floating Point Converter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="converter">
+    <h2>Decimal-128 Floating Point Converter</h2>
+    <div class="input-container">
+      <input type="text" id="decimalInput" placeholder="Enter decimal (i.e., 127.0)">
+      <span>x10</span>
+      <input type="number" id="exponentInput" placeholder="Enter exponent">
+    </div>
+
+    <label for="roundingMethod">Choose rounding method:</label>
+    <select id="roundingMethod">
+      <option value="truncate">Truncate</option>
+      <option value="roundUp">Round Up</option>
+      <option value="roundDown">Round Down</option>
+      <option value="roundToNearest">Round to Nearest (ties to even)</option>
+    </select>
+
+    <button onclick="convert()">Convert</button>
+    <p>Binary Output: <span id="binaryOutput"></span></p>
+    <p>Hexadecimal Equivalent: <span id="hexOutput"></span></p>
+    <p>Special Cases: <span id="specialCases"></span></p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
