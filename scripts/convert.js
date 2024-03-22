@@ -10,6 +10,8 @@ $(document).ready(function() {
         let decimalInput = parseFloat(document.getElementById("decimalInput").value);
         let exponentInput = parseInt(document.getElementById("exponentInput").value);
 
+        let msb = decimalInput < 0 ? 1 : 0;
+
         // NORMALIZE
         while (!Number.isInteger(decimalInput)) {
             decimalInput *= 10;
@@ -19,9 +21,9 @@ $(document).ready(function() {
         // Apply toFixed before converting to string
         var normalizedInput = decimalInput.toFixed(34);
 
-        decimalInput = Math.round(decimalInput);
+        decimalInput = Math.round(Math.abs(decimalInput));
 
-        // Convert to string and pad with leading zeros
+        // TODO: CHANGE TO 34
         decimalInput = decimalInput.toString().padStart(7, '0');
 
         // TODO: CHANGE TO 6176
@@ -36,15 +38,6 @@ $(document).ready(function() {
 
         document.getElementById("decimalDisplay").textContent = "Decimal Input: " + decimalInput;
         document.getElementById("exponentDisplay").textContent = "Exponent Input: " + exponentInput;
-
-        // MSB CHECK
-        if (decimalInput < 0) {
-            output[0] = 1;
-        } else {
-            output[0] = 0;
-        }
-        document.getElementById("outputDisplay").textContent = "MSB: " + output.join("");
-
 
         // MSD (Leftmost) CHECK
         var decimalInputString = decimalInput; // Use the padded string directly
@@ -78,6 +71,14 @@ $(document).ready(function() {
         }
 
         document.getElementById("combinationOutputDisplay").textContent = "\nCombination Bit: " + combinationBit;
+
+        // MANTISSA
+        var binaryExponent = paddedBinaryEPrime.slice(2);
+        var exponentContinuationBit = binaryExponent.padEnd(6, '0'); //TODO: MAKE 12
+        document.getElementById("exponentContinuationBitDisplay").textContent = "Exponent Continuation Bit: " + exponentContinuationBit;
+
+        var binaryOutput = output.join("") + combinationBit + exponentContinuationBit;
+        document.getElementById("binaryOutput").textContent = "Binary Output: " + binaryOutput;
     }
 
 // Decimal-128 Floating Point Converter
