@@ -34,26 +34,26 @@ $(document).ready(function() {
         
         // OUTPUT
         document.getElementById("binaryOutput").textContent = "place the binary output here";
-        document.getElementById("hexOutput").textContent = "place the hex output here";
+        //document.getElementById("hexOutput").textContent = "place the hex output here";
 
         document.getElementById("decimalDisplay").textContent = "Decimal Input: " + decimalInput;
         document.getElementById("exponentDisplay").textContent = "Exponent Input: " + exponentInput;
 
         // MSD (Leftmost) CHECK
-        var decimalInputString = decimalInput; // Use the padded string directly
+        var decimalInputString = decimalInput;
         if (decimalInputString[0] === '0') {
             var leftmostDigit = '0';
         } else {
             var leftmostDigit = decimalInputString[0];
         }
         var binaryLeftmostDigit = parseInt(leftmostDigit).toString(2).padStart(4, '0');
-        document.getElementById("binaryOutputDisplay").textContent = "Binary MSD Output: " + leftmostDigit + "=" + binaryLeftmostDigit;
+        document.getElementById("binaryOutputDisplay").textContent = "Binary MSD Output: " + leftmostDigit + " = " + binaryLeftmostDigit;
 
 
         // E' to BINARY
         var binaryEPrime = e_prime.toString(2);
         var padSize = 4 - (binaryEPrime.length % 4);
-        if (padSize === 4) padSize = 0; // If the length is already a multiple of 4, don't add any padding
+        if (padSize === 4) padSize = 0;
         var paddedBinaryEPrime = binaryEPrime.padStart(binaryEPrime.length + padSize, '0');
         document.getElementById("EPrimeOutputDisplay").textContent = "Binary E Prime Output: " + e_prime + " = " + paddedBinaryEPrime;
 
@@ -72,13 +72,94 @@ $(document).ready(function() {
 
         document.getElementById("combinationOutputDisplay").textContent = "\nCombination Bit: " + combinationBit;
 
-        // MANTISSA
+        // EXPONENT
         var binaryExponent = paddedBinaryEPrime.slice(2);
         var exponentContinuationBit = binaryExponent.padEnd(6, '0'); //TODO: MAKE 12
         document.getElementById("exponentContinuationBitDisplay").textContent = "Exponent Continuation Bit: " + exponentContinuationBit;
 
-        var binaryOutput = output.join("") + combinationBit + exponentContinuationBit;
-        document.getElementById("binaryOutput").textContent = "Binary Output: " + binaryOutput;
+        
+        // BCD
+        var densePackedBCD = '';
+
+        for (var i = 1; i < decimalInputString.length; i += 3) {
+            var BCD = decimalInputString.substring(i, i + 3);
+        
+            var binaryBCD = '';
+            for (var j = 0; j < BCD.length; j++) {
+                var binaryDigit = parseInt(BCD[j]).toString(2).padStart(4, '0');
+                binaryBCD += binaryDigit;
+            }
+            
+            binaryBCD = binaryBCD.trim();
+            document.getElementById("binaryBCDDisplay").textContent = "Binary BCD: " + BCD + " = " + binaryBCD;
+        
+            var key = binaryBCD[0] + binaryBCD[4] + binaryBCD[8];
+
+            switch (key) {
+                case '000':
+                    var output = binaryBCD[1] + binaryBCD[2] + binaryBCD[3] + binaryBCD[5] + binaryBCD[6] + binaryBCD[7] + '0' + binaryBCD[9] + binaryBCD[10] + binaryBCD[11];
+                    console.log('A: ' + output);
+                    densePackedBCD += output;
+                    break;
+                case '001':
+                    var output = binaryBCD[1] + binaryBCD[2] + binaryBCD[3] + binaryBCD[5] + binaryBCD[6] + binaryBCD[7] + '1' + '0' + '0' + binaryBCD[11];
+                    console.log('B: ' + output);
+                    densePackedBCD += output;
+                    break;
+                case '010':
+                    var output = binaryBCD[1] + binaryBCD[2] + binaryBCD[3] + binaryBCD[9] + binaryBCD[10] + binaryBCD[7] + '1' + '0' + '1' + binaryBCD[11];
+                    console.log('C' + output);
+                    densePackedBCD += output;
+                    break;
+                case '011':
+                    var output = binaryBCD[1] + binaryBCD[2] + binaryBCD[3] + '1' + '0' + binaryBCD[7] + '1' + '1' + '1' + binaryBCD[11];
+                    console.log('D' + output);
+                    densePackedBCD += output;
+                    break;
+                case '100':
+                    var output = binaryBCD[9] + binaryBCD[10] + binaryBCD[3] + binaryBCD[5] + binaryBCD[6] + binaryBCD[7] + '1' + '1' + '0' + binaryBCD[11];
+                    console.log('E' + output);
+                    densePackedBCD += output;
+                    break;
+                case '101':
+                    var output = binaryBCD[5] + binaryBCD[6] + binaryBCD[3] + '0' + '1' + binaryBCD[7] + '1' + '1' + '1' + binaryBCD[11];
+                    console.log('F' + output);
+                    densePackedBCD += output;
+                    break;
+                case '110':
+                    var output = binaryBCD[9] + binaryBCD[10] + binaryBCD[3] + '0' + '0' + binaryBCD[7] + '1' + '1' + '1' + binaryBCD[11];
+                    console.log('G' + output);
+                    densePackedBCD += output;
+                    break;
+                case '111':
+                    var output = '0' + '0' + binaryBCD[3] + '1' + '1' + binaryBCD[7] + '1' + '1' + '1' + binaryBCD[11];
+                    console.log('H' + output);
+                    densePackedBCD += output;
+                    break;
+                default:
+                    break;
+            }
+
+            //densePackedBCD += ' ';
+
+        }
+
+        console.log("FULL:" + densePackedBCD);
+
+        binaryOutput = msb + combinationBit + exponentContinuationBit + densePackedBCD;
+        document.getElementById("FINALbinaryOutputDisplay").textContent = "FINAL Binary Output: " + binaryOutput;
+
+        var hexOutput = "";
+        for (var i = 0; i < binaryOutput.length; i += 4) {
+            var chunk = binaryOutput.slice(i, i + 4);
+            var hex = parseInt(chunk, 2).toString(16);
+            hexOutput += hex;
+
+            var hexOutput = parseInt(binaryOutput, 2).toString(16);
+            hexOutput = hexOutput.toUpperCase();
+            console.log("hexOutput");
+            document.getElementById("hexOutput").textContent = hexOutput;
+        }
     }
 
 // Decimal-128 Floating Point Converter
