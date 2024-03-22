@@ -1,5 +1,23 @@
 $(document).ready(function() {
     
+    function convert() {
+        
+        // Get Input
+        const decimalInput = parseFloat(document.getElementById("decimalInput").value);
+        const exponentInput = parseInt(document.getElementById("exponentInput").value);
+
+        // Initialization
+        var normalizedInput = decimalInput.toFixed(34);
+        var e_prime = exponentInput + 6176;
+
+        // Start of Conversion
+        var output = [128];
+
+        // Show Ouput
+        document.getElementById("binaryOutput").textContent = "place the binary output here";
+        document.getElementById("hexOutput").textContent = "place the hex output here";
+    }
+
 // Decimal-128 Floating Point Converter
 // 128-bit: MSb for sign, next 5 for continuation bit, next 12 for exponent continuation bit, and 110 for mantissa combination bit
 
@@ -44,4 +62,30 @@ $(document).ready(function() {
 // 6. Convert to hex
 // Get least significant 4 digits, get hex equivalent
 
+// truncate function
+// round down function
+// round up function
+// round to nearest [ties-to-even] function
+    function downloadOutput() {
+        const binaryOutput = document.getElementById("binaryOutput").textContent;
+        const hexOutput = document.getElementById("hexOutput").textContent;
+        const outputText = `Binary Output: ${binaryOutput}\nHexadecimal Output: ${hexOutput}`;
+
+        // text file 
+        const blob = new Blob([outputText], { type: "text/plain"});
+        
+        // anchor
+        const anchor = document.createElement("a");
+        anchor.download = "conversion_output.text";
+
+        // URL for blob 
+        anchor.href = window.URL.createObjectURL(blob);
+
+        // append anchor to body and trigger click event
+        document.body.appendChild(anchor);
+        anchor.click();
+
+        // remove anchor
+        document.body.removeChild(anchor);
+    }
 });
