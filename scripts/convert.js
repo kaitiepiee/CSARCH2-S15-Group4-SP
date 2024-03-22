@@ -39,19 +39,41 @@ $(document).ready(function() {
         } else {
             output[0] = 0;
         }
-        document.getElementById("outputDisplay").textContent = "Output: " + output.join("");
+        document.getElementById("outputDisplay").textContent = "MSB: " + output.join("");
 
 
         // MSD (Leftmost) CHECK
-        var leftmostDigit = Math.abs(decimalInput).toString()[0];
+        var decimalInputString = Math.abs(decimalInput).toString();
+        if (decimalInputString[0] === '0') {
+            var leftmostDigit = '0';
+        } else {
+            var leftmostDigit = decimalInputString[0];
+        }
         var binaryLeftmostDigit = parseInt(leftmostDigit).toString(2).padStart(4, '0');
-        document.getElementById("binaryOutputDisplay").textContent = "Binary MSD Output: " + binaryLeftmostDigit;
-        
+        document.getElementById("binaryOutputDisplay").textContent = "Binary MSD Output: " + leftmostDigit + "=" + binaryLeftmostDigit;
 
 
+        // E' to BINARY
+        var binaryEPrime = e_prime.toString(2);
+        var padSize = 4 - (binaryEPrime.length % 4);
+        if (padSize === 4) padSize = 0; // If the length is already a multiple of 4, don't add any padding
+        var paddedBinaryEPrime = binaryEPrime.padStart(binaryEPrime.length + padSize, '0');
+        document.getElementById("EPrimeOutputDisplay").textContent = "Binary E Prime Output: " + e_prime + " = " + paddedBinaryEPrime;
 
+        // COMBINATION BIT
+        if (leftmostDigit >= 1 && leftmostDigit <= 7) {
+            var expMSB = paddedBinaryEPrime.slice(0, 2);
+            var coefMSD = binaryLeftmostDigit.slice(-3);
+            var combinationBit = expMSB + coefMSD;
+        }
 
+        else if (leftmostDigit >= 8 && leftmostDigit <= 9) {
+            var expMSB = paddedBinaryEPrime.slice(0, 2);
+            var coefMSD = binaryLeftmostDigit.slice(-1);
+            var combinationBit = '11' + expMSB + coefMSD;
+        }
 
+        document.getElementById("combinationOutputDisplay").textContent += "\nCombination Bit: " + combinationBit;
 
     }
 
