@@ -9,18 +9,22 @@ $(document).ready(function() {
         // Get Input
         let decimalInput = parseFloat(document.getElementById("decimalInput").value);
         let exponentInput = parseInt(document.getElementById("exponentInput").value);
-        
+
         // NORMALIZE
         while (!Number.isInteger(decimalInput)) {
             decimalInput *= 10;
             exponentInput -= 1;
         }
-        
+
+        // Apply toFixed before converting to string
+        var normalizedInput = decimalInput.toFixed(34);
+
         decimalInput = Math.round(decimalInput);
 
-        // Initialization
-        var normalizedInput = decimalInput.toFixed(34);
-        // CHANGE THIS LATER
+        // Convert to string and pad with leading zeros
+        decimalInput = decimalInput.toString().padStart(7, '0');
+
+        // TODO: CHANGE TO 6176
         var e_prime = exponentInput + 101;
 
         // Start of Conversion
@@ -43,7 +47,7 @@ $(document).ready(function() {
 
 
         // MSD (Leftmost) CHECK
-        var decimalInputString = Math.abs(decimalInput).toString();
+        var decimalInputString = decimalInput; // Use the padded string directly
         if (decimalInputString[0] === '0') {
             var leftmostDigit = '0';
         } else {
@@ -61,7 +65,7 @@ $(document).ready(function() {
         document.getElementById("EPrimeOutputDisplay").textContent = "Binary E Prime Output: " + e_prime + " = " + paddedBinaryEPrime;
 
         // COMBINATION BIT
-        if (leftmostDigit >= 1 && leftmostDigit <= 7) {
+        if (leftmostDigit >= 0 && leftmostDigit <= 7) {
             var expMSB = paddedBinaryEPrime.slice(0, 2);
             var coefMSD = binaryLeftmostDigit.slice(-3);
             var combinationBit = expMSB + coefMSD;
@@ -73,8 +77,7 @@ $(document).ready(function() {
             var combinationBit = '11' + expMSB + coefMSD;
         }
 
-        document.getElementById("combinationOutputDisplay").textContent += "\nCombination Bit: " + combinationBit;
-
+        document.getElementById("combinationOutputDisplay").textContent = "\nCombination Bit: " + combinationBit;
     }
 
 // Decimal-128 Floating Point Converter
