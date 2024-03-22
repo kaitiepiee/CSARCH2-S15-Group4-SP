@@ -1,21 +1,58 @@
 $(document).ready(function() {
     
+    $(".convert-button").click(function() {
+        convert();
+    });
+
     function convert() {
         
         // Get Input
-        const decimalInput = parseFloat(document.getElementById("decimalInput").value);
-        const exponentInput = parseInt(document.getElementById("exponentInput").value);
+        let decimalInput = parseFloat(document.getElementById("decimalInput").value);
+        let exponentInput = parseInt(document.getElementById("exponentInput").value);
+        
+        // NORMALIZE
+        while (!Number.isInteger(decimalInput)) {
+            decimalInput *= 10;
+            exponentInput -= 1;
+        }
+        
+        decimalInput = Math.round(decimalInput);
 
         // Initialization
         var normalizedInput = decimalInput.toFixed(34);
-        var e_prime = exponentInput + 6176;
+        // CHANGE THIS LATER
+        var e_prime = exponentInput + 101;
 
         // Start of Conversion
         var output = [128];
-
-        // Show Ouput
+        
+        // OUTPUT
         document.getElementById("binaryOutput").textContent = "place the binary output here";
         document.getElementById("hexOutput").textContent = "place the hex output here";
+
+        document.getElementById("decimalDisplay").textContent = "Decimal Input: " + decimalInput;
+        document.getElementById("exponentDisplay").textContent = "Exponent Input: " + exponentInput;
+
+        // MSB CHECK
+        if (decimalInput < 0) {
+            output[0] = 1;
+        } else {
+            output[0] = 0;
+        }
+        document.getElementById("outputDisplay").textContent = "Output: " + output.join("");
+
+
+        // MSD (Leftmost) CHECK
+        var leftmostDigit = Math.abs(decimalInput).toString()[0];
+        var binaryLeftmostDigit = parseInt(leftmostDigit).toString(2).padStart(4, '0');
+        document.getElementById("binaryOutputDisplay").textContent = "Binary MSD Output: " + binaryLeftmostDigit;
+        
+
+
+
+
+
+
     }
 
 // Decimal-128 Floating Point Converter
