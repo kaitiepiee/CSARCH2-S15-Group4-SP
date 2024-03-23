@@ -1,11 +1,24 @@
 $(document).ready(function() {
-    
+
+    // JQuery selector/function for converting input
     $(".convert-button").click(function() {
         convert();
     });
 
+    // JQuery selector/function for downloading output
+    $(".download-button").click(function() {
+        downloadOutput();
+    });
+
+    // Decimal-128 Floating Point Converter
+    // 128-bit: MSb for sign, next 5 for continuation bit, next 12 for exponent continuation bit, and 110 for mantissa combination bit
     function convert() {
-        
+
+        // ------------------------------------[INITIALIZATION]---------------------------------------
+        // 1. Decimal
+        // 2. Base 10
+        // 3. Normalize to 34 whole digits
+        // 4. E' = E + 6176
         // Get Input
         let decimalInput = parseFloat(document.getElementById("decimalInput").value);
         let exponentInput = parseInt(document.getElementById("exponentInput").value);
@@ -18,18 +31,17 @@ $(document).ready(function() {
             exponentInput -= 1;
         }
 
-        // Apply toFixed before converting to string
-        var normalizedInput = decimalInput.toFixed(34);
-
         decimalInput = Math.round(Math.abs(decimalInput));
 
         // TODO: CHANGE TO 34
-        decimalInput = decimalInput.toString().padStart(7, '0');
+        decimalInput = decimalInput.toString().padStart(34, '0');
 
         // TODO: CHANGE TO 6176
-        var e_prime = exponentInput + 101;
+        var e_prime = exponentInput + 6176;
+        // -----------------------------------------[END]---------------------------------------------
 
-        // Start of Conversion
+
+        // --------------------------------------[CONVERSION]-----------------------------------------
         var output = [128];
         
         // OUTPUT
@@ -52,6 +64,7 @@ $(document).ready(function() {
 
         // E' to BINARY
         var binaryEPrime = e_prime.toString(2);
+        console.log("e_prime:" + e_prime + "binaryEPrime: " + binaryEPrime);
         var padSize = 4 - (binaryEPrime.length % 4);
         if (padSize === 4) padSize = 0;
         var paddedBinaryEPrime = binaryEPrime.padStart(binaryEPrime.length + padSize, '0');
@@ -160,107 +173,50 @@ $(document).ready(function() {
             console.log("hexOutput");
             document.getElementById("hexOutput").textContent = hexOutput;
         }
+        // -----------------------------------------[END]---------------------------------------------
+
     }
 
-// Decimal-128 Floating Point Converter
-// 128-bit: MSb for sign, next 5 for continuation bit, next 12 for exponent continuation bit, and 110 for mantissa combination bit
+    // ---------------------------------------[SPECIAL CASES]------------------------------------------
+    // truncate function
+    // round down function
+    // round up function
+    // round to nearest [ties-to-even] function
+    // --------------------------------------------[END]-----------------------------------------------
 
-// Rules:
-// 1. Decimal
-// 2. Base 10
-// 3. Normalize to 34 whole digits
-// 4. E' = E + 6176
 
-// Steps outline:
-// 1. MSB (Sign): 0 if +, 1 if -
-// O, XXXXX, XXXXXXXXXXXX, X...X
-
-// 2. MSD (Leftmost digit):
-// -Convert to binary (Modulo until 1)
-// Y Y Y Y
-// _ C D E
-
-// 3. E' = exponent + 6176:
-// -6176 - exponent = E'
-// -Convert E' to binary (Modulo until 1)
-// ZZ ZZZZ ZZZZ ZZZZ
-// AB exponent
-
-// -If else MSD >= 1 && <= 7
-// a b c d e	WHERE Exp (a b) |	Coefficient MSD (0 c d e)
-// -If else MSD >= 8 && <= 9
-// 1 1 c d e	WHERE Exp (c d) |	Coefficient MSD (1 0 0 e)
-// -If else Infinity
-// 1 1 1 1 0
-// -Else (Nan)
-// 1 1 1 1 0
-
-// O, OOOOO, XXXXXXXXXXXX, X...X
-
-// 4. Append the rest of exponent
-// O, OOOOO, OOOOOOOOOOOO, X...X
-
-// 5. BCD FOR THE REST
-// Get most significant 3 digits (nt including msd)
-
-// 6. Convert to hex
-// Get least significant 4 digits, get hex equivalent
-
-// truncate function
-// round down function
-// round up function
-// round to nearest [ties-to-even] function
+    // ---------------------------------------[DOWNLOAD OUTPUT]----------------------------------------
+    // TODO: fix output file format
     function downloadOutput() {
-        const binaryOutput = document.getElementById("binaryOutput").textContent;
-        const hexOutput = document.getElementById("hexOutput").textContent;
-        const outputText = `Binary Output: ${binaryOutput}\nHexadecimal Output: ${hexOutput}`;
+        // Input values
+        var decimalInput = document.getElementById('decimalInput').value;
+        var exponentInput = document.getElementById('exponentInput').value;
+        // Output content
+        var binaryOutput = document.getElementById('binaryOutput').textContent;
+        var hexOutput = document.getElementById('hexOutput').textContent;
 
-        // text file 
-        const blob = new Blob([outputText], { type: "text/plain"});
-        
-        // anchor
-        const anchor = document.createElement("a");
-        anchor.download = "conversion_output.text";
+        // Combine content into a single string
+        var content = "INPUT\n" +
+                    "Decimal: " + decimalInput + "\n" +
+                    "Exponent: " + exponentInput + "\n\n" +
+                    "OUTPUT\n" +
+                    "Binary Output: " + binaryOutput + "\n" + // TODO: fix the call ID
+                    "Hexadecimal Equivalent: " + hexOutput;
 
-        // URL for blob 
-        anchor.href = window.URL.createObjectURL(blob);
+        // Create a Blob containing the content
+        var blob = new Blob([content], { type: 'text/plain' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
 
-        // append anchor to body and trigger click event
-        document.body.appendChild(anchor);
-        anchor.click();
-
-        // remove anchor
-        document.body.removeChild(anchor);
+        // Filename
+        a.download = 'output.txt'; 
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
     }
+    // --------------------------------------------[END]-----------------------------------------------
+
 });
 
-// Logic for download output text tile
-// TODO: fix output file format
-function downloadOutput() {
-    // Input values
-    var decimalInput = document.getElementById('decimalInput').value;
-    var exponentInput = document.getElementById('exponentInput').value;
-    // Output content
-    var binaryOutput = document.getElementById('binaryOutput').textContent;
-    var hexOutput = document.getElementById('hexOutput').textContent;
 
-    // Combine content into a single string
-    var content = "IINPUT\n" +
-                  "Decimal: " + decimalInput + "\n" +
-                  "Exponent: " + exponentInput + "\n\n" +
-                  "OUTPUT\n" +
-                  "Binary Output: " + binaryOutput + "\n" + // TODO: fix the call ID
-                  "Hexadecimal Equivalent: " + hexOutput;
-
-    // Create a Blob containing the content
-    var blob = new Blob([content], { type: 'text/plain' });
-    var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-
-    // Filename
-    a.download = 'output.txt'; 
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-}
 
