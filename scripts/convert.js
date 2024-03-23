@@ -55,8 +55,8 @@ $(document).ready(function() {
             return;
         }
 
-        if (isNaN(decimalInput)) {
-            // NaN case
+        if (isNaN(exponentInput)) {
+            // Invalid input case
             displaySpecialOutput('X', '11111' + '00000000000', 'NaN');
             return;
         }
