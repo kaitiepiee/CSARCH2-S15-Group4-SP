@@ -12,7 +12,8 @@ The simulation project assigned to our group was building a decimal-128 floating
 
 The full analysis writeup is found in our repository.
 
-The video for our project DEMO and the # OUTPUT SCREENSHOTS of our program is in a Google Drive Link because the file was too big to upload on Github.
+# DEMO & PROGRAM OUTPUT SCREENSHOTS
+The video for our project DEMO and the output screenshots of our program is in a Google Drive Link because the file was too big to upload on Github.
 https://drive.google.com/drive/folders/1MsRUrbQqHUVsMdDg6BVmzfQul8dioI4k?usp=sharing
 
 # Group Members
