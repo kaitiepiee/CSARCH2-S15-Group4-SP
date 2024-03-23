@@ -1,7 +1,7 @@
-#CSARCH2 S15 Group 4 Simulation Project
-#Decimal-128 Floating Point Converter
+# CSARCH2 S15 Group 4 Simulation Project
+# Decimal-128 Floating Point Converter
 
-#Group Members
+# Group Members
 - Genuino, Jose Mari Victorio
 - Ong, Nicole Daphne
 - Teves, Hannah Juliet
