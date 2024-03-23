@@ -69,11 +69,17 @@ $(document).ready(function() {
             exponentInput++;
         }
 
-        // TODO: CHANGE TO 34
-        decimalInput = decimalInput.padStart(16, '0');
+        /* TODO: CHANGE TO 34
+        single: 7
+        double: 16
+        */
+        decimalInput = decimalInput.padStart(34, '0');
 
-        // TODO: CHANGE TO 6176
-        var e_prime = exponentInput + 398;
+        /* TODO: CHANGE TO 6176
+        single: 101
+        double: 398
+        */
+        var e_prime = exponentInput + 6176;
         // -----------------------------------------[END]---------------------------------------------
 
 
@@ -101,8 +107,12 @@ $(document).ready(function() {
         // E' to BINARY
         var binaryEPrime = e_prime.toString(2);
         console.log("e_prime:" + e_prime + "binaryEPrime: " + binaryEPrime);
-        //TODO: CHANGE TO 14
-        var padSize = 10 - binaryEPrime.length;
+
+        /* TODO: CHANGE TO 14
+        single = 8
+        double = 10
+        */
+        var padSize = 14 - binaryEPrime.length;
         if (padSize < 0) padSize = 0;
         var paddedBinaryEPrime = binaryEPrime.padStart(binaryEPrime.length + padSize, '0');
         document.getElementById("EPrimeOutputDisplay").textContent = "Binary E Prime Output: " + e_prime + " = " + paddedBinaryEPrime;
@@ -124,8 +134,11 @@ $(document).ready(function() {
 
         // EXPONENT
         var binaryExponent = paddedBinaryEPrime.slice(2);
-        //TODO: MAKE 12
-        var exponentContinuationBit = binaryExponent.padEnd(8, '0');
+        /*TODO: MAKE 12
+        single = 6
+        double = 8
+        */
+        var exponentContinuationBit = binaryExponent.padEnd(12, '0');
         document.getElementById("exponentContinuationBitDisplay").textContent = "Exponent Continuation Bit: " + exponentContinuationBit;
 
         
@@ -135,6 +148,7 @@ $(document).ready(function() {
         for (var i = 1; i < decimalInputString.length; i += 3) {
             var BCD = decimalInputString.substring(i, i + 3);
         
+            console.log("BCD: " + BCD);
             var binaryBCD = '';
             for (var j = 0; j < BCD.length; j++) {
                 var binaryDigit = parseInt(BCD[j]).toString(2).padStart(4, '0');
@@ -203,16 +217,21 @@ $(document).ready(function() {
         document.getElementById("exp-cont-output").textContent = exponentContinuationBit;
         document.getElementById("bcd-output").textContent = densePackedBCD;
 
+        console.log("ASDFASDFASDF:" + binaryOutput);
+
         var hexOutput = "";
         for (var i = 0; i < binaryOutput.length; i += 4) {
             var chunk = binaryOutput.slice(i, i + 4);
             var hex = parseInt(chunk, 2).toString(16);
             hexOutput += hex;
 
-            var hexOutput = parseInt(binaryOutput, 2).toString(16);
-            hexOutput = hexOutput.toUpperCase();
-            console.log("hexOutput: " + hexOutput);
+            if ((i + 4) % 16 === 0) { 
+                hexOutput += ' ';
+            }
         }
+
+        hexOutput = hexOutput.toUpperCase();
+        console.log("hexOutput: " + hexOutput);
         
         // Display outputs 
         // document.getElementById("binaryOutput").textContent = binaryOutput;
