@@ -15,8 +15,8 @@
     <h2 class="title">Decimal-128 Floating Point Converter</h2>
     <div class="input-container">
       <input type="text" id="decimalInput" placeholder="Enter decimal (i.e., 127.0)">
-      <span>x10^</span>
-      <input type="text" id="exponentInput" placeholder="Enter exponent">
+      <span>x10</span>
+      <input type="number" id="exponentInput" placeholder="Enter exponent">
     </div>
 
     <div class="rounding-container">
@@ -44,37 +44,46 @@
     <p id="exponentContinuationBitDisplay"></p>
     <p id="binaryBCDDisplay"></p>
     
-    <p class="output-line">Assemble Binary Output: 
-      <div class="output-box" id="binaryOutput">
-        <div class="output-container">
-          <fieldset id="msb">
-            <legend>Sign</legend>
-            <p id="msb-output"></p>
-            <!-- <p class="msb-title">MSB</p> -->
-          </fieldset>
-    
-          <fieldset id="combination-bit">
-            <legend>Combi</legend>
-            <p id="combi-output"></p>
-            <!-- <p class="combi-title">Combi</p> -->
-          </fieldset>
-    
-          <fieldset id="exponent-continuation">
-            <legend>ExpCont</legend>
-            <p id="exp-cont-output"></p>
-            <!-- <p class="exp-title">Exponent Cont.</p>  -->
-          </fieldset>
-    
-          <fieldset id="densely-packed-bcd">
-            <legend>Mantissa</legend>
-            <p id="bcd-output"></p>
-            <!-- <p class="bcd-title">Mantissa</p> -->
-          </fieldset>
+    <fieldset class="output-display">
+      <strong id="output-display-title">IEEE-754 Decimal-128 Floating Point Representation</strong>
+      <p class="output-line">
+        <div class="output-box" id="binaryOutput">
+          <div class="output-container">
+            <fieldset id="msb">
+              <legend>Sign</legend>
+              <p id="msb-output">0</p>
+              <!-- <p class="msb-title">MSB</p> -->
+            </fieldset>
+      
+            <fieldset id="combination-bit">
+              <legend>Combi</legend>
+              <p id="combi-output">00000</p>
+              <!-- <p class="combi-title">Combi</p> -->
+            </fieldset>
+      
+            <fieldset id="exponent-continuation">
+              <legend>ExpCont</legend>
+              <p id="exp-cont-output">000000000000</p>
+              <!-- <p class="exp-title">Exponent Cont.</p>  -->
+            </fieldset>
+      
+            <fieldset id="densely-packed-bcd">
+              <legend>Mantissa</legend>
+              <p id="bcd-output">0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</p>
+              <!-- <p class="bcd-title">Mantissa</p> -->
+            </fieldset>
+          </div>
         </div>
-      </div>
-    </p>
+      </p>
 
-    <p class="output-line">Hexadecimal Equivalent: <span class="output-box" id="hexOutput"></span></p>
+      <fieldset>
+        <legend class="output-line">Hexadecimal Equivalent</legend>
+        <span class="output-box" id="hexOutput">00000000000000000000000000000000</span>
+        <span><sub>16</sub></span>
+      </fieldset>
+    
+    </fieldset>
+
     
 
     <button class="download-button">Download Output</button>

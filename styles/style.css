@@ -1,11 +1,12 @@
 body {
-    font-family: Arial, sans-serif; /* Set the font family to Arial */
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     position: relative;
 }
+
 
 .converter {
     padding: 30px;
@@ -92,7 +93,7 @@ body {
     margin-bottom: 5px;
 }
 
-.output-box {
+/* .output-box {
     display: block;
     width: 100%;
     background-color: #f0f0f0;
@@ -100,11 +101,21 @@ body {
     border-radius: 3px;
     word-wrap:break-word;
     font-weight: 700;
-}
+} */
 
 #bcd-output {
     word-break: break-all;
     /* display: inline; */
+}
+
+.output-display {
+    font-weight: 600;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 50px;
+}
+
+#output-display-title {
+    font-size: larger;
 }
 
 .output-container {
