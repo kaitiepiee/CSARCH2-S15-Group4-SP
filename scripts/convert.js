@@ -52,7 +52,7 @@ $(document).ready(function() {
         }
 
         // ------------------------------------[ROUNDING METHODS]---------------------------------------
-        switch (roundingMethod) { // New lines
+        switch (roundingMethod) {
             case 'truncate':
                 if (decimalInput.length > 34) {
                     let truncateAmount = decimalInput.length - 34;
@@ -65,8 +65,9 @@ $(document).ready(function() {
                 if (decimalInput.length > 34) {
                     let truncateAmount = decimalInput.length - 34;
                     decimalInput = decimalInput.slice(0, 34);
-                    if (decimalInput[33] >= 5) {
-                        decimalInput = (parseInt(decimalInput) + 1).toString();
+                    if (msb === 0) {
+                        let lastChar = parseInt(decimalInput.charAt(decimalInput.length - 1));
+                        decimalInput = decimalInput.slice(0, -1) + (lastChar + 1).toString();
                     }
                     exponentInput += truncateAmount;
                     console.log ("roundUp");
@@ -76,8 +77,9 @@ $(document).ready(function() {
                 if (decimalInput.length > 34) {
                     let truncateAmount = decimalInput.length - 34;
                     decimalInput = decimalInput.slice(0, 34);
-                    if (decimalInput[33] < 5) {
-                        decimalInput = (parseInt(decimalInput)).toString();
+                    if (msb === 1) {
+                        let lastChar = parseInt(decimalInput.charAt(decimalInput.length - 1));
+                        decimalInput = decimalInput.slice(0, -1) + (lastChar + 1).toString();
                     }
                     exponentInput += truncateAmount;
                     console.log ("roundDown");
@@ -86,13 +88,20 @@ $(document).ready(function() {
             case 'roundToNearest':
                 if (decimalInput.length > 34) {
                     let truncateAmount = decimalInput.length - 34;
+                    let lastDigit = decimalInput.charAt(33);
+                    let nextDigit = decimalInput.charAt(34);
                     decimalInput = decimalInput.slice(0, 34);
-                    if (decimalInput[33] >= 5) {
-                        decimalInput = (parseInt(decimalInput) + 1).toString();
-                    } else {
-                        decimalInput = (parseInt(decimalInput)).toString();
-                    }
                     exponentInput += truncateAmount;
+            
+                    if (nextDigit > '5') {
+                        let lastChar = parseInt(lastDigit) + 1;
+                        decimalInput = decimalInput.slice(0, -1) + lastChar.toString();
+                    } else if (nextDigit === '5') {
+                        if (parseInt(lastDigit) % 2 !== 0) {
+                            let lastChar = parseInt(lastDigit) + 1;
+                            decimalInput = decimalInput.slice(0, -1) + lastChar.toString();
+                        }
+                    }
                     console.log ("roundToNearest");
                 }
                 break;
