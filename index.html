@@ -43,13 +43,41 @@
     <p id="combinationOutputDisplay"></p>
     <p id="exponentContinuationBitDisplay"></p>
     <p id="binaryBCDDisplay"></p>
+    
+    <p class="output-line">Assemble Binary Output: 
+      <div class="output-box" id="binaryOutput">
+        <div class="output-container">
+          <fieldset id="msb">
+            <legend>Sign</legend>
+            <p id="msb-output"></p>
+            <!-- <p class="msb-title">MSB</p> -->
+          </fieldset>
+    
+          <fieldset id="combination-bit">
+            <legend>Combi</legend>
+            <p id="combi-output"></p>
+            <!-- <p class="combi-title">Combi</p> -->
+          </fieldset>
+    
+          <fieldset id="exponent-continuation">
+            <legend>ExpCont</legend>
+            <p id="exp-cont-output"></p>
+            <!-- <p class="exp-title">Exponent Cont.</p>  -->
+          </fieldset>
+    
+          <fieldset id="densely-packed-bcd">
+            <legend>Mantissa</legend>
+            <p id="bcd-output"></p>
+            <!-- <p class="bcd-title">Mantissa</p> -->
+          </fieldset>
+        </div>
+      </div>
+    </p>
 
-    <div class="output-container">
-      <p class="output-line">Binary Output: <span class="output-box" id="binaryOutput"></span></p>
-      <p class="output-line">Hexadecimal Equivalent: <span class="output-box" id="hexOutput"></span></p>
-    </div>
+    <p class="output-line">Hexadecimal Equivalent: <span class="output-box" id="hexOutput"></span></p>
+    
 
-    <button class="download-button" onclick="downloadOutput()">Download Output</button>
+    <button class="download-button">Download Output</button>
   </div>
 
   <footer>CSARCH2 Simulation Project S15 Group 4</footer>

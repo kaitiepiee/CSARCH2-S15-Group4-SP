@@ -178,7 +178,11 @@ $(document).ready(function() {
         console.log("FULL:" + densePackedBCD);
         
         binaryOutput = msb + combinationBit + exponentContinuationBit + densePackedBCD;
-        
+        document.getElementById("msb-output").textContent = msb;
+        document.getElementById("combi-output").textContent = combinationBit;
+        document.getElementById("exp-cont-output").textContent = exponentContinuationBit;
+        document.getElementById("bcd-output").textContent = densePackedBCD;
+
         var hexOutput = "";
         for (var i = 0; i < binaryOutput.length; i += 4) {
             var chunk = binaryOutput.slice(i, i + 4);
@@ -189,9 +193,9 @@ $(document).ready(function() {
             hexOutput = hexOutput.toUpperCase();
             console.log("hexOutput: " + hexOutput);
         }
-
+        
         // Display outputs 
-        document.getElementById("binaryOutput").textContent = binaryOutput;
+        // document.getElementById("binaryOutput").textContent = binaryOutput;
         document.getElementById("hexOutput").textContent = hexOutput;
 
         // -----------------------------------------[END]---------------------------------------------

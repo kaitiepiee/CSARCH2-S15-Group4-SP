@@ -10,11 +10,11 @@ body {
 .converter {
     padding: 30px;
     border-radius: 5px;
-    max-width: 650px;
+    max-width: 950px;
     margin: auto;
     text-align: center;
     flex-grow: 1;
-    width: 100%
+    width: 100%;
 }
 
 .converter h2 {
@@ -96,9 +96,47 @@ body {
     display: block;
     width: 100%;
     background-color: #f0f0f0;
-    padding: 20px;
+    padding: 30px;
     border-radius: 3px;
     word-wrap:break-word;
+    font-weight: 700;
+}
+
+#bcd-output {
+    word-break: break-all;
+    /* display: inline; */
+}
+
+.output-container {
+    display: flex;
+    flex: column;
+    justify-content: space-between;
+}
+
+.output-container div {
+    justify-content: space-between;
+    font-size: small;
+    text-align: center;
+}
+
+.output-container p {
+    padding: 10px;
+}
+
+#msb-output {
+    color: red;
+}
+
+#combi-output {
+    color: green;
+}
+
+#exp-cont-output {
+    color: blue;
+}
+
+#bcd-output {
+    color: purple;
 }
 
 footer {
