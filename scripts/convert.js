@@ -5,12 +5,13 @@ $(document).ready(function() {
     $(".convert-button").click(function() {
         var decimalInput = document.getElementById('decimalInput');
         var exponentInput = document.getElementById('exponentInput');
-    
-        if(decimalInput.value === '' || exponentInput.value === '') {
+        var roundingMethod = document.getElementById('roundingMethod');
+
+        if(decimalInput.value === '' || exponentInput.value === '' || roundingMethod.value === '') {
             alert('All fields are required!');
             return false;
         }
-        convert();
+        convert(roundingMethod.value);
     });
 
     // JQuery selector/function for downloading output
@@ -20,24 +21,7 @@ $(document).ready(function() {
 
     // Decimal-128 Floating Point Converter
     // 128-bit: MSb for sign, next 5 for continuation bit, next 12 for exponent continuation bit, and 110 for mantissa combination bit
-    function convert() {
-        // ------------------------------------[ROUNDING METHODS]---------------------------------------
-        $('#roundingMethod').change(function() {
-            // Retrieve the selected rounding method
-            var roundingMethod = $(this).val();
-            roundingMethod = roundingMethod.toUpperCase();
-            
-            if (roundingMethod === 'TRUNCATE') { // TRUNCATE
-              
-            } else if (roundingMethod === 'ROUND UP') { // ROUND UP
-    
-            } else if (roundingMethod === 'ROUND DOWN') { // ROUND DOWN
-    
-            } else { // RTN-TE
-    
-            }
-        });
-        // -----------------------------------------[END]---------------------------------------------
+    function convert(roundingMethod) {
 
         // ------------------------------------[INITIALIZATION]---------------------------------------
         // 1. Decimal
@@ -67,13 +51,54 @@ $(document).ready(function() {
             console.log("BBBBBBBBBBBBBBBBBdecimalInput: " + decimalInput + " exponentInput: " + exponentInput);
         }
 
-        // TRUNCATE BY DEFAULT
-        if (decimalInput.length > 34) {
-            truncateAmount = decimalInput.length - 34;
-            decimalInput = decimalInput.slice(0, 34);
-            exponentInput += truncateAmount;
-            console.log ("TRUNCATE");
+        // ------------------------------------[ROUNDING METHODS]---------------------------------------
+        switch (roundingMethod) { // New lines
+            case 'truncate':
+                if (decimalInput.length > 34) {
+                    let truncateAmount = decimalInput.length - 34;
+                    decimalInput = decimalInput.slice(0, 34);
+                    exponentInput += truncateAmount;
+                    console.log ("truncate");
+                }
+                break;
+            case 'roundUp':
+                if (decimalInput.length > 34) {
+                    let truncateAmount = decimalInput.length - 34;
+                    decimalInput = decimalInput.slice(0, 34);
+                    if (decimalInput[33] >= 5) {
+                        decimalInput = (parseInt(decimalInput) + 1).toString();
+                    }
+                    exponentInput += truncateAmount;
+                    console.log ("roundUp");
+                }
+                break;
+            case 'roundDown':
+                if (decimalInput.length > 34) {
+                    let truncateAmount = decimalInput.length - 34;
+                    decimalInput = decimalInput.slice(0, 34);
+                    if (decimalInput[33] < 5) {
+                        decimalInput = (parseInt(decimalInput)).toString();
+                    }
+                    exponentInput += truncateAmount;
+                    console.log ("roundDown");
+                }
+                break;
+            case 'roundToNearest':
+                if (decimalInput.length > 34) {
+                    let truncateAmount = decimalInput.length - 34;
+                    decimalInput = decimalInput.slice(0, 34);
+                    if (decimalInput[33] >= 5) {
+                        decimalInput = (parseInt(decimalInput) + 1).toString();
+                    } else {
+                        decimalInput = (parseInt(decimalInput)).toString();
+                    }
+                    exponentInput += truncateAmount;
+                    console.log ("roundToNearest");
+                }
+                break;
         }
+        
+        // -----------------------------------------[END]---------------------------------------------
         
         // Special cases handling after normalization
         if (exponentInput > 6111) {
