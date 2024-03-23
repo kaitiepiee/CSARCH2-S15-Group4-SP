@@ -233,3 +233,34 @@ $(document).ready(function() {
         document.body.removeChild(anchor);
     }
 });
+
+// Logic for download output text tile
+// TODO: fix output file format
+function downloadOutput() {
+    // Input values
+    var decimalInput = document.getElementById('decimalInput').value;
+    var exponentInput = document.getElementById('exponentInput').value;
+    // Output content
+    var binaryOutput = document.getElementById('binaryOutput').textContent;
+    var hexOutput = document.getElementById('hexOutput').textContent;
+
+    // Combine content into a single string
+    var content = "IINPUT\n" +
+                  "Decimal: " + decimalInput + "\n" +
+                  "Exponent: " + exponentInput + "\n\n" +
+                  "OUTPUT\n" +
+                  "Binary Output: " + binaryOutput + "\n" + // TODO: fix the call ID
+                  "Hexadecimal Equivalent: " + hexOutput;
+
+    // Create a Blob containing the content
+    var blob = new Blob([content], { type: 'text/plain' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+
+    // Filename
+    a.download = 'output.txt'; 
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
