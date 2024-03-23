@@ -42,6 +42,8 @@ $(document).ready(function() {
             console.log("BBBBBBBBBBBBBBBBBdecimalInput: " + decimalInput + " exponentInput: " + exponentInput);
         }
 
+        
+
         // Special cases handling after normalization
         if (exponentInput > 6111) {
             // Infinity case
@@ -61,8 +63,12 @@ $(document).ready(function() {
             return;
         }
 
+        console.log("decimalInput: " + decimalInput + " exponentInput: " + exponentInput + " IS STRING: " + typeof(decimalInput));
+
         // Remove the leading 0s from whole number
-        decimalInput = parseInt(decimalInput).toString();
+        decimalInput = decimalInput.replace(/^0+/, '');
+
+        console.log("decimalInput: " + decimalInput + " exponentInput: " + exponentInput + " IS STRING: " + typeof(decimalInput));
 
         while (decimalInput.endsWith('0') && decimalInput.length > 1) {
             decimalInput = decimalInput.slice(0, -1);
@@ -173,32 +179,32 @@ $(document).ready(function() {
                     break;
                 case '010':
                     var output = binaryBCD[1] + binaryBCD[2] + binaryBCD[3] + binaryBCD[9] + binaryBCD[10] + binaryBCD[7] + '1' + '0' + '1' + binaryBCD[11];
-                    console.log('C' + output);
+                    console.log('C: ' + output);
                     densePackedBCD += output;
                     break;
                 case '011':
                     var output = binaryBCD[1] + binaryBCD[2] + binaryBCD[3] + '1' + '0' + binaryBCD[7] + '1' + '1' + '1' + binaryBCD[11];
-                    console.log('D' + output);
+                    console.log('D: ' + output);
                     densePackedBCD += output;
                     break;
                 case '100':
                     var output = binaryBCD[9] + binaryBCD[10] + binaryBCD[3] + binaryBCD[5] + binaryBCD[6] + binaryBCD[7] + '1' + '1' + '0' + binaryBCD[11];
-                    console.log('E' + output);
+                    console.log('E: ' + output);
                     densePackedBCD += output;
                     break;
                 case '101':
                     var output = binaryBCD[5] + binaryBCD[6] + binaryBCD[3] + '0' + '1' + binaryBCD[7] + '1' + '1' + '1' + binaryBCD[11];
-                    console.log('F' + output);
+                    console.log('F: ' + output);
                     densePackedBCD += output;
                     break;
                 case '110':
                     var output = binaryBCD[9] + binaryBCD[10] + binaryBCD[3] + '0' + '0' + binaryBCD[7] + '1' + '1' + '1' + binaryBCD[11];
-                    console.log('G' + output);
+                    console.log('G: ' + output);
                     densePackedBCD += output;
                     break;
                 case '111':
                     var output = '0' + '0' + binaryBCD[3] + '1' + '1' + binaryBCD[7] + '1' + '1' + '1' + binaryBCD[11];
-                    console.log('H' + output);
+                    console.log('H: ' + output);
                     densePackedBCD += output;
                     break;
                 default:
