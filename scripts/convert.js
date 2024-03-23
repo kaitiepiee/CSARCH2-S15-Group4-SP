@@ -45,7 +45,7 @@ $(document).ready(function() {
         var output = [128];
         
         // OUTPUT
-        document.getElementById("binaryOutput").textContent = "place the binary output here";
+        //document.getElementById("binaryOutput").textContent = "place the binary output here";
         //document.getElementById("hexOutput").textContent = "place the hex output here";
 
         document.getElementById("decimalDisplay").textContent = "Decimal Input: " + decimalInput;
@@ -158,10 +158,9 @@ $(document).ready(function() {
         }
 
         console.log("FULL:" + densePackedBCD);
-
+        
         binaryOutput = msb + combinationBit + exponentContinuationBit + densePackedBCD;
-        document.getElementById("FINALbinaryOutputDisplay").textContent = "FINAL Binary Output: " + binaryOutput;
-
+        
         var hexOutput = "";
         for (var i = 0; i < binaryOutput.length; i += 4) {
             var chunk = binaryOutput.slice(i, i + 4);
@@ -170,9 +169,13 @@ $(document).ready(function() {
 
             var hexOutput = parseInt(binaryOutput, 2).toString(16);
             hexOutput = hexOutput.toUpperCase();
-            console.log("hexOutput");
-            document.getElementById("hexOutput").textContent = hexOutput;
+            console.log("hexOutput: " + hexOutput);
         }
+
+        // Display outputs 
+        document.getElementById("binaryOutput").textContent = binaryOutput;
+        document.getElementById("hexOutput").textContent = hexOutput;
+
         // -----------------------------------------[END]---------------------------------------------
 
     }
