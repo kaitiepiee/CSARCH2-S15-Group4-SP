@@ -13,6 +13,23 @@ $(document).ready(function() {
     // Decimal-128 Floating Point Converter
     // 128-bit: MSb for sign, next 5 for continuation bit, next 12 for exponent continuation bit, and 110 for mantissa combination bit
     function convert() {
+        // ------------------------------------[ROUNDING METHODS]---------------------------------------
+        $('#roundingMethod').change(function() {
+            // Retrieve the selected rounding method
+            var roundingMethod = $(this).val();
+            roundingMethod = roundingMethod.toUpperCase();
+            
+            if (roundingMethod === 'TRUNCATE') { // TRUNCATE
+              
+            } else if (roundingMethod === 'ROUND UP') { // ROUND UP
+    
+            } else if (roundingMethod === 'ROUND DOWN') { // ROUND DOWN
+    
+            } else { // RTN-TE
+    
+            }
+        });
+        // -----------------------------------------[END]---------------------------------------------
 
         // ------------------------------------[INITIALIZATION]---------------------------------------
         // 1. Decimal
@@ -41,8 +58,6 @@ $(document).ready(function() {
             exponentInput -= digitsAfterDecimal;
             console.log("BBBBBBBBBBBBBBBBBdecimalInput: " + decimalInput + " exponentInput: " + exponentInput);
         }
-
-        
 
         // Special cases handling after normalization
         if (exponentInput > 6111) {
