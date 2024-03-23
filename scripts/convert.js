@@ -42,6 +42,25 @@ $(document).ready(function() {
             console.log("BBBBBBBBBBBBBBBBBdecimalInput: " + decimalInput + " exponentInput: " + exponentInput);
         }
 
+        // Special cases handling after normalization
+        if (exponentInput > 6111) {
+            // Infinity case
+            displaySpecialOutput(decimalInput < 0 ? '1' : '0', '11110' + '00000000000', 'Infinity');
+            return;
+        }
+
+        if (exponentInput < -6176) {
+            // Lower infinity (N/A) case
+            displaySpecialOutput('N/A', 'N/A', 'N/A');
+            return;
+        }
+
+        if (isNaN(decimalInput)) {
+            // NaN case
+            displaySpecialOutput('X', '11111' + '00000000000', 'NaN');
+            return;
+        }
+
         // Remove the leading 0s from whole number
         decimalInput = parseInt(decimalInput).toString();
 
@@ -204,6 +223,31 @@ $(document).ready(function() {
     }
 
     // ---------------------------------------[SPECIAL CASES]------------------------------------------
+    function displaySpecialOutput(signBit, combinationBits, specialCase) {
+        let binaryOutput, hexOutput;
+
+        if (specialCase === 'Infinity') {
+            binaryOutput = `${signBit} ${combinationBits} ${'X'.repeat(110)}`; // Placeholder X's for the rest of the bits
+            hexOutput = '-';
+        } else if (specialCase === 'NaN') {
+            binaryOutput = `X ${combinationBits} ${'X'.repeat(110)}`; // Placeholder X's for the rest of the bits, sign bit is don't care ('X')
+            hexOutput = '-';
+        } else { // Lower infinity (N/A) case
+            binaryOutput = 'N/A';
+            hexOutput = 'N/A';
+        }
+
+        // Update the display elements with the special case outputs
+        document.getElementById("binaryOutput").textContent = binaryOutput; // Formatted as requested
+        document.getElementById("hexOutput").textContent = hexOutput;
+        document.getElementById("decimalDisplay").textContent = "Decimal Input: " + (specialCase === 'N/A' ? 'N/A' : specialCase);
+        document.getElementById("exponentDisplay").textContent = "Exponent Input: " + (specialCase === 'N/A' ? 'N/A' : specialCase);
+        document.getElementById("binaryOutputDisplay").textContent = "Binary MSD Output: " + (specialCase === 'N/A' ? 'N/A' : specialCase);
+        document.getElementById("EPrimeOutputDisplay").textContent = "Binary E Prime Output: " + (specialCase === 'N/A' ? 'N/A' : '-');
+        document.getElementById("combinationOutputDisplay").textContent = "Combination Bit: " + (specialCase === 'N/A' ? 'N/A' : combinationBits);
+        document.getElementById("exponentContinuationBitDisplay").textContent = "Exponent Continuation Bit: " + (specialCase === 'N/A' ? 'N/A' : '-');
+        document.getElementById("binaryBCDDisplay").textContent = "Binary BCD: " + (specialCase === 'N/A' ? 'N/A' : '-');
+    }
     // truncate function
     // round down function
     // round up function
