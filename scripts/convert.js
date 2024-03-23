@@ -82,8 +82,9 @@ $(document).ready(function() {
         // E' to BINARY
         var binaryEPrime = e_prime.toString(2);
         console.log("e_prime:" + e_prime + "binaryEPrime: " + binaryEPrime);
-        var padSize = 4 - (binaryEPrime.length % 4);
-        if (padSize === 4) padSize = 0;
+        //TODO: CHANGE TO 14
+        var padSize = 10 - binaryEPrime.length;
+        if (padSize < 0) padSize = 0;
         var paddedBinaryEPrime = binaryEPrime.padStart(binaryEPrime.length + padSize, '0');
         document.getElementById("EPrimeOutputDisplay").textContent = "Binary E Prime Output: " + e_prime + " = " + paddedBinaryEPrime;
 
@@ -183,16 +184,16 @@ $(document).ready(function() {
         document.getElementById("exp-cont-output").textContent = exponentContinuationBit;
         document.getElementById("bcd-output").textContent = densePackedBCD;
 
+        console.log("FINALbinaryOutput: " + binaryOutput);
+
         var hexOutput = "";
         for (var i = 0; i < binaryOutput.length; i += 4) {
             var chunk = binaryOutput.slice(i, i + 4);
             var hex = parseInt(chunk, 2).toString(16);
             hexOutput += hex;
-
-            var hexOutput = parseInt(binaryOutput, 2).toString(16);
-            hexOutput = hexOutput.toUpperCase();
-            console.log("hexOutput: " + hexOutput);
         }
+        hexOutput = hexOutput.toUpperCase();
+        console.log("hexOutput: " + hexOutput);
         
         // Display outputs 
         // document.getElementById("binaryOutput").textContent = binaryOutput;
