@@ -1,7 +1,15 @@
 $(document).ready(function() {
 
+    
     // JQuery selector/function for converting input
     $(".convert-button").click(function() {
+        var decimalInput = document.getElementById('decimalInput');
+        var exponentInput = document.getElementById('exponentInput');
+    
+        if(decimalInput.value === '' || exponentInput.value === '') {
+            alert('All fields are required!');
+            return false;
+        }
         convert();
     });
 
@@ -61,7 +69,9 @@ $(document).ready(function() {
 
         // TRUNCATE BY DEFAULT
         if (decimalInput.length > 34) {
+            truncateAmount = decimalInput.length - 34;
             decimalInput = decimalInput.slice(0, 34);
+            exponentInput += truncateAmount;
             console.log ("TRUNCATE");
         }
         
