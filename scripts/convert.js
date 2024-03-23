@@ -184,16 +184,16 @@ $(document).ready(function() {
         document.getElementById("exp-cont-output").textContent = exponentContinuationBit;
         document.getElementById("bcd-output").textContent = densePackedBCD;
 
-        console.log("FINALbinaryOutput: " + binaryOutput);
-
         var hexOutput = "";
         for (var i = 0; i < binaryOutput.length; i += 4) {
             var chunk = binaryOutput.slice(i, i + 4);
             var hex = parseInt(chunk, 2).toString(16);
             hexOutput += hex;
+
+            var hexOutput = parseInt(binaryOutput, 2).toString(16);
+            hexOutput = hexOutput.toUpperCase();
+            console.log("hexOutput: " + hexOutput);
         }
-        hexOutput = hexOutput.toUpperCase();
-        console.log("hexOutput: " + hexOutput);
         
         // Display outputs 
         // document.getElementById("binaryOutput").textContent = binaryOutput;
