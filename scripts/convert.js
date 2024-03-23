@@ -42,6 +42,12 @@ $(document).ready(function() {
             console.log("BBBBBBBBBBBBBBBBBdecimalInput: " + decimalInput + " exponentInput: " + exponentInput);
         }
 
+        // TRUNCATE BY DEFAULT
+        if (decimalInput.length > 34) {
+            decimalInput = decimalInput.slice(0, 34);
+            console.log ("TRUNCATE");
+        }
+
         
 
         // Special cases handling after normalization
