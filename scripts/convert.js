@@ -64,7 +64,6 @@ $(document).ready(function() {
             decimalInput = decimalInput.slice(0, 34);
             console.log ("TRUNCATE");
         }
-
         
         // Special cases handling after normalization
         if (exponentInput > 6111) {
