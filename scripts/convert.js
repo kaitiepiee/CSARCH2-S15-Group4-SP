@@ -20,24 +20,41 @@ $(document).ready(function() {
         // 3. Normalize to 34 whole digits
         // 4. E' = E + 6176
         // Get Input
-        let decimalInput = parseFloat(document.getElementById("decimalInput").value);
+        let decimalInput = document.getElementById("decimalInput").value;
         let exponentInput = parseInt(document.getElementById("exponentInput").value);
 
         let msb = decimalInput < 0 ? 1 : 0;
 
-        // NORMALIZE
-        while (!Number.isInteger(decimalInput)) {
-            decimalInput *= 10;
-            exponentInput -= 1;
+        // Remove the negative sign if it exists
+        if (msb === 1) {
+            decimalInput = decimalInput.substring(1);
         }
 
-        decimalInput = Math.round(Math.abs(decimalInput));
+        decimalInput = decimalInput.toString();
+
+        // Normalize
+        if (decimalInput.includes('.')) {
+            console.log("AAAAAAAAAAdecimalInput: " + decimalInput + " exponentInput: " + exponentInput);
+            let decimalIndex = decimalInput.indexOf('.');
+            let digitsAfterDecimal = decimalInput.length - decimalIndex - 1;
+            decimalInput = decimalInput.slice(0, decimalIndex) + decimalInput.slice(decimalIndex + 1);
+            exponentInput -= digitsAfterDecimal;
+            console.log("BBBBBBBBBBBBBBBBBdecimalInput: " + decimalInput + " exponentInput: " + exponentInput);
+        }
+
+        // Remove the leading 0s from whole number
+        decimalInput = parseInt(decimalInput).toString();
+
+        while (decimalInput.endsWith('0') && decimalInput.length > 1) {
+            decimalInput = decimalInput.slice(0, -1);
+            exponentInput++;
+        }
 
         // TODO: CHANGE TO 34
-        decimalInput = decimalInput.toString().padStart(34, '0');
+        decimalInput = decimalInput.padStart(16, '0');
 
         // TODO: CHANGE TO 6176
-        var e_prime = exponentInput + 6176;
+        var e_prime = exponentInput + 398;
         // -----------------------------------------[END]---------------------------------------------
 
 
@@ -87,7 +104,8 @@ $(document).ready(function() {
 
         // EXPONENT
         var binaryExponent = paddedBinaryEPrime.slice(2);
-        var exponentContinuationBit = binaryExponent.padEnd(6, '0'); //TODO: MAKE 12
+        //TODO: MAKE 12
+        var exponentContinuationBit = binaryExponent.padEnd(8, '0');
         document.getElementById("exponentContinuationBitDisplay").textContent = "Exponent Continuation Bit: " + exponentContinuationBit;
 
         
